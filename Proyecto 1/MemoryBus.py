@@ -1,6 +1,7 @@
 import threading
 import time
 from Memory import Memory
+from Processor import Processor
 
 ## Falta definir el cpu
 class MemoryBus:
@@ -14,7 +15,7 @@ class MemoryBus:
 		
 		for processor in self.processors:
 			if processor.id != cpu 
-				#Verificar los bloques de cache con asociatividad one way
+				#Verificar los bloques de cache con asociatividad one way controlador
 				
 	def lockMe(self):
 		self.lock.acquire()
@@ -22,4 +23,5 @@ class MemoryBus:
 	def unlockMe(self):
 		self.lock.release()
 
+		self.lock.release()
 
