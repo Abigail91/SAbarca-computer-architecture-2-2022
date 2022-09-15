@@ -1,0 +1,25 @@
+import time
+class Memory: 
+	def  __init__(self):
+		self.positions = []
+		for i in range(8):
+			self.positions += [0]
+			
+	def write(self, address, data):
+		time.sleep(1)
+		self.positions[address] = data
+		
+	def read(self, address):
+		time.sleep(1)
+		return self.positions[address]
+		
+
+
+#memoria = Memory()
+#print(memoria.read(0) )
+#print("\n")
+#print(memoria.read(4))
+#print("\n")
+#memoria.write(4,5)
+#print(memoria.read(4))
+		
