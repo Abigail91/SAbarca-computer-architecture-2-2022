@@ -46,7 +46,7 @@ class Controller:
 				
 			else:
 				data = self.memoryBus.readMemory(address)
-				blockWrite  = self.cache.write(address, block.getData(), "E")
+				blockWrite  = self.cache.write(address, data, "E")
 				
 			if blockWrite.bitState == "M" and blockWrite.address :
 				self.memoryBus.writeMemory(block.address, block.data)
