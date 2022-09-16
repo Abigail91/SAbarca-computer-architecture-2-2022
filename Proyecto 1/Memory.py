@@ -12,6 +12,9 @@ class Memory:
 	def read(self, address):
 		time.sleep(1)
 		return self.positions[address]
+	def printMem(self):
+		for i in range(8):
+			print(str(i) + "=" +str(self.positions[i]))
 		
 
 

@@ -36,7 +36,7 @@ class MemoryBus:
 			block = processor.control.cache.getL1BlockByAddress(address)
 			match change:
 				case 0:
-					block.setBitState("s") 
+					block.setBitState("S") 
 				case 1:
 					block.setBitState("I") 
 

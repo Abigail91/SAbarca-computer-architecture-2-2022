@@ -13,22 +13,28 @@ class L1Cache:
 				
 	def write(self, address, data, bitState):
 		if address == 0 or address == 4:
-			block =self.l1Blocks[0]
-			self.l1Blocks[0].setAddress(address)
-			self.l1Blocks[0].setBitState(bitState)
-			self.l1Blocks[0].setData(data)
+			block = L1Block(0)
+			block.setAddress(self.l1Blocks[0].getAddress())
+			block.setBitState(self.l1Blocks[0].getBitState())
+			block.setData(self.l1Blocks[0].getData())
 		elif address == 1 or address == 5:
-			block =self.l1Blocks[1]
-			self.l1Blocks[1].setAddress(address)
-			self.l1Blocks[1].setBitState(bitState)
-			self.l1Blocks[1].setData(data)
+			block = L1Block(1)
+			block.setAddress(self.l1Blocks[1].getAddress())
+			block.setBitState(self.l1Blocks[1].getBitState())
+			block.setData(self.l1Blocks[1].getData())
 		elif address == 2 or address == 6:
-			block =self.l1Blocks[2]
+			block = L1Block(2)
+			block.setAddress(self.l1Blocks[2].getAddress())
+			block.setBitState(self.l1Blocks[2].getBitState())
+			block.setData(self.l1Blocks[2].getData())
 			self.l1Blocks[2].setAddress(address)
 			self.l1Blocks[2].setBitState(bitState)
 			self.l1Blocks[2].setData(data)
 		elif address == 3 or address == 7:
-			block = self.l1Blocks[3]
+			block = L1Block(3)
+			block.setAddress(self.l1Blocks[3].getAddress())
+			block.setBitState(self.l1Blocks[3].getBitState())
+			block.setData(self.l1Blocks[3].getData())
 			self.l1Blocks[3].setAddress(address)
 			self.l1Blocks[3].setBitState(bitState)
 			self.l1Blocks[3].setData(data)
@@ -36,6 +42,7 @@ class L1Cache:
 			block = L1Block(0)
 			print("Direccion incorrecta")
 		return block
+	
 #l1 = L1Cache() 
 #l1.l1Blocks[2].memoryAddress = 5	
 #for i in range(4):

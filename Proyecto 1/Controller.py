@@ -9,6 +9,13 @@ class Controller:
 		self.memoryBus  = bus
 		self.processor  = processorId
 		
+	def printCache(self):
+		print("\n P" + str(self.processor))
+		self.cache.getBlock(0).printBlock()
+		self.cache.getBlock(1).printBlock()
+		self.cache.getBlock(2).printBlock()
+		self.cache.getBlock(3).printBlock()
+		
 	def getCorresBlock(self, address):
         	if address == 0 or address == 4:
             		block = self.cache.getBlock(0)
@@ -25,8 +32,35 @@ class Controller:
 		        return block
         	else:
         		return False
-
-		
+        					
+			
+	def write(self, address, data):
+		hitBlock  = self.getCorresBlock(address)
+		if hitBlock:
+			print(str(self.processor) + "Write Hit \n")
+			state = self.cache.getL1BlockByAddress(address).getBitState()
+			if state == "E":
+				self.cache.write(address, data, "M")
+			elif state == "M":
+				self.cache.write(address, data, "M")
+			elif state == "S":
+				self.cache.write(address, data, "M")
+				self.memoryBus.lockMe()
+				sharedProcessors = self.memoryBus.sharedAddressP(address, self.processor)
+				self.memoryBus.changeStates(address, sharedProcessors, 1)
+				self.memoryBus.unlockMe()
+		else:
+			print(str(self.processor) + "Write Miss")
+			actualBlock = self.cache.write(address, data, "M")
+			
+			self.memoryBus.lockMe()
+			if actualBlock.bitState == "M" and actualBlock.memoryAddress != address:
+				self.memoryBus.writeMemory(actualBlock.memoryAddress, actualBlock.data)
+				
+			sharedProcessors = self.memoryBus.sharedAddressP(address, self.processor)
+			self.memoryBus.changeStates(address, sharedProcessors, 1)
+			self.memoryBus.unlockMe()			
+			
 	def read(self, address):
 		hitBlock  = self.getCorresBlock(address)
 		if hitBlock:
@@ -48,19 +82,9 @@ class Controller:
 				data = self.memoryBus.readMemory(address)
 				blockWrite  = self.cache.write(address, data, "E")
 				
-			if blockWrite.bitState == "M" and blockWrite.address :
-				self.memoryBus.writeMemory(block.address, block.data)
+			if blockWrite.bitState == "M" and blockWrite.memoryAddress != address:
+				self.memoryBus.writeMemory(blockWrite.memoryAddress, blockWrite.data)
 			self.memoryBus.unlockMe()
-				
-			
-	def write(self, address, data):
-		hitBlock  = self.getCorresBlock(address)
-		if hitBlock.bitState != "I":
-			print(str(self.processor) + "Write Hit \n")
-			#Logica de estados MESI
-		else:
-			print("Write Miss")
-			#Logica de estados MESI y politicas de escritura
 			
 
 	

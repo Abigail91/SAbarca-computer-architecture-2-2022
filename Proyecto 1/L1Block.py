@@ -30,10 +30,8 @@ class L1Block:
         	self.data = data
         	
 	def printBlock(self):
-        	print("ID " + str(self.id) +"\n")
-        	print("State " + str(self.bitState) +"\n")
-        	print("Address " + str(self.memoryAddress) +"\n")
-        	print("Data " + str(self.data) +"\n")
+        	print("ID " + str(self.id) + "  State " + str(self.bitState)+ "  Address " + str(self.memoryAddress) +"  Data " + str(self.data)  )
+ 
 
 #l = L1Block("B0")
 #print(l.id)
