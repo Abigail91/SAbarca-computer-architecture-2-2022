@@ -28,15 +28,33 @@ class Controller:
 
 		
 	def read(self, address):
-		hitBlock  = self.getData(address)
-		if hitBlock.bitState != "I":
-			print(str(self.processor) + "Read Hit \n")
+		hitBlock  = self.getCorresBlock(address)
+		if hitBlock:
+			print(str(self.processor) + " Read Hit \n")
 		else:
-			print(str(self.processor) + "Read miss\n")
-			#Manejo de miss
+			print(str(self.processor) + " Read miss\n")
+			self.memoryBus.lockMe()
+			processorsShared = self.memoryBus.sharedAddressP(address, self.processor)
+			if len(processorsShared) != 0:
+				p = processorsShared[0]
+				block = p.control.getCorresBlock(address)
+				if block.bitState == "M":
+					self.memoryBus.writeMemory(block.memoryAddress, block.data)
+				blockWrite = self.cache.write(address, block.getData(), "S")
+				self.memoryBus.changeStates(address, processorsShared, 0)
+				
+				
+			else:
+				data = self.memoryBus.readMemory(address)
+				blockWrite  = self.cache.write(address, block.getData(), "E")
+				
+			if blockWrite.bitState == "M" and blockWrite.address :
+				self.memoryBus.writeMemory(block.address, block.data)
+			self.memoryBus.unlockMe()
+				
 			
 	def write(self, address, data):
-		hitBlock  = self.getData(address)
+		hitBlock  = self.getCorresBlock(address)
 		if hitBlock.bitState != "I":
 			print(str(self.processor) + "Write Hit \n")
 			#Logica de estados MESI

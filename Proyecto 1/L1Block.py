@@ -28,6 +28,12 @@ class L1Block:
 
 	def setData(self, data):
         	self.data = data
+        	
+	def printBlock(self):
+        	print("ID " + str(self.id) +"\n")
+        	print("State " + str(self.bitState) +"\n")
+        	print("Address " + str(self.memoryAddress) +"\n")
+        	print("Data " + str(self.data) +"\n")
 
 #l = L1Block("B0")
 #print(l.id)

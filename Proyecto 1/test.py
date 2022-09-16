@@ -13,9 +13,15 @@ b.processors = [p0, p1, p2,p3]
 
 	
 p0.control.cache.getBlock(2).setAddress(2)
-p0.control.cache.getBlock(2).setBitState("M")
+p0.control.cache.getBlock(2).setBitState("I")
 p0.control.cache.getBlock(2).setData(5)
 p3.control.cache.getBlock(2).setAddress(2)
 p3.control.cache.getBlock(2).setBitState("M")
 p3.control.cache.getBlock(2).setData(5)
 b.sharedAddressP(2, 1)
+print(b.readMemory(2))
+p2.control.read(2)
+p2.control.cache.getBlock(2).printBlock()
+p0.control.cache.getBlock(2).printBlock()
+p3.control.cache.getBlock(2).printBlock()
+print(b.readMemory(2))
