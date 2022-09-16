@@ -1,21 +1,23 @@
 import threading
 import time
 from Memory import Memory
-from Processor import Processor
 
-## Falta definir el cpu
+
+
 class MemoryBus:
-	def  __init__(self, p0, p1, p2, p3, memory):
+	def  __init__(self, memory):
 		self.lock = threading.Lock()
 		memory = memory
-		processors = [p0, p1, p2, p3]
+		processors = []
 		
 	def sharedAddressP(self, address, cpu):
 		cpus = []
 		
 		for processor in self.processors:
-			if processor.id != cpu 
-				#Verificar los bloques de cache con asociatividad one way controlador
+			if processor.id != cpu and processor.control.getCorresBlock(address):
+				cpus.append(processor.id)
+		print(str(cpus))
+		return cpus
 				
 	def lockMe(self):
 		self.lock.acquire()
@@ -24,4 +26,6 @@ class MemoryBus:
 		self.lock.release()
 
 		self.lock.release()
+
+
 

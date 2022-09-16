@@ -3,14 +3,14 @@ import time
 from Controller import Controller
 
 class Processor:
-	def  __init__(self, id):
+	def  __init__(self, id, bus):
 		self.id = id
 		self.running  = False
 		self.instRunning  = ""
 		self.lastInst  = ""
-		self.control  = Controller(self.id)
+		self.control  = Controller(self.id, bus)
 		
-	def decodeInst(self, instruction)
+	def decodeInst(self, instruction):
 		print("Instrcuccion decodificada")
 	
 	def exc(self):
