@@ -30,7 +30,7 @@ def genInstruction():
 		instResult = "CALC "
 	return instResult
 	
-for i in range(10):
-	print(genInstruction())
+#for i in range(10):
+#	print(genInstruction())
 
 # 16 bits	

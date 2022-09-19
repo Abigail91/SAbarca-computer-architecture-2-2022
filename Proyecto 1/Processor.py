@@ -1,17 +1,16 @@
 import threading
 import time
+import instGenerator
 from Controller import Controller
 
 class Processor:
 	def  __init__(self, id, bus):
 		self.id = id
 		self.running  = False
-		self.instRunning  = ""
+		self.instRunning  = "---"
 		self.lastInst  = ""
 		self.control  = Controller(self.id, bus)
 		
-	def decodeInst(self, instruction):
-		print("Instrcuccion decodificada")
 	
 	def exc(self):
 		while self.running:
@@ -21,17 +20,30 @@ class Processor:
 		self.thread_clock()
 		
 	def thread_clock(self):
-		print("Generando siguiente")
+		self.lastInst = self.instRunning
+		inst = instGenerator.genInstruction()
+		print(str(self.id) + "=" + inst)
+		initial = inst[0]
+		if initial == "R":
+			self.control.read(int(inst[5:8], 2))
+		elif initial == "W":
+			self.control.write(int(inst[6:9], 2), int(inst[10:],16))
+		elif initial == "C":
+			print("CALC")
+		else:
+			print("Instruction generator error")
+
 		
 	def runThread(self, isStep):
 		if self.running:
 			print(str(self.id) + " Ejecutando \n")
 		else: 
 			if isStep:
-				thread = threading.Thread(target=exc_step, daemon=True)
+				hilo = threading.Thread(target=self.exc_step)
 			else:
-				thread = threading.Thread(target=exc, daemon=True)
-			thread.start()
+				self.running = True
+				hilo = threading.Thread(target=self.exc)
+			hilo.start()
 			
 	def stopThread(self):
 		if self.running:
