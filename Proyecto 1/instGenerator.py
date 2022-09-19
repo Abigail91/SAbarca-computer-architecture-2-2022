@@ -1,7 +1,4 @@
-
 import time
-
-
 			
 def randomNum(n):
 	t0 = str(time.time())
@@ -19,11 +16,14 @@ def randomNum(n):
 	return ex
 def genInstruction():
 	inst = randomNum(2)
-	address = randomNum(7)
+	address = bin(randomNum(7))[2:]
+	while len(address) < 3:  
+		address = "0" + address
 	if inst == 0:
-		instResult = "WRITE " + str(address)+ ";" + str(randomNum(65535))
+		data = hex(randomNum(65535))[2:]
+		instResult = "WRITE " + str(address)+ ";" + data
 	elif inst == 1:
-		instResult = "READ " + str(address)	
+		instResult = "READ " + str(address)
 	elif inst == 1:
 		instResult = "CALC "
 	else:
@@ -32,4 +32,5 @@ def genInstruction():
 	
 for i in range(10):
 	print(genInstruction())
+
 # 16 bits	
