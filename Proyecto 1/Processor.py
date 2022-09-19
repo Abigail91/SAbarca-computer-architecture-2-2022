@@ -15,6 +15,7 @@ class Processor:
 	def exc(self):
 		while self.running:
 			self.thread_clock()
+			time.sleep(3)
 	
 	def exc_step(self):
 		self.thread_clock()
@@ -22,6 +23,7 @@ class Processor:
 	def thread_clock(self):
 		self.lastInst = self.instRunning
 		inst = instGenerator.genInstruction()
+		self.instRunning = inst
 		print(str(self.id) + "=" + inst)
 		initial = inst[0]
 		if initial == "R":
@@ -39,10 +41,10 @@ class Processor:
 			print(str(self.id) + " Ejecutando \n")
 		else: 
 			if isStep:
-				hilo = threading.Thread(target=self.exc_step)
+				hilo = threading.Thread(target=self.exc_step, daemon=True)
 			else:
 				self.running = True
-				hilo = threading.Thread(target=self.exc)
+				hilo = threading.Thread(target=self.exc, daemon=True)
 			hilo.start()
 			
 	def stopThread(self):
