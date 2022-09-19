@@ -50,9 +50,8 @@ class Controller:
 				self.memoryBus.changeStates(address, sharedProcessors, 1)
 				self.memoryBus.unlockMe()
 		else:
-			print(str(self.processor) + "Write Miss")
+			print(str(self.processor) + "= Write Miss")
 			actualBlock = self.cache.write(address, data, "M")
-			
 			self.memoryBus.lockMe()
 			if actualBlock.bitState == "M" and actualBlock.memoryAddress != address:
 				self.memoryBus.writeMemory(actualBlock.memoryAddress, actualBlock.data)
@@ -66,7 +65,8 @@ class Controller:
 		if hitBlock:
 			print(str(self.processor) + " Read Hit \n")
 		else:
-			print(str(self.processor) + " Read miss\n")
+			print(str(self.processor) + "= Read miss\n")
+			
 			self.memoryBus.lockMe()
 			processorsShared = self.memoryBus.sharedAddressP(address, self.processor)
 			if len(processorsShared) != 0:
