@@ -15,7 +15,6 @@ class Processor:
 	def exc(self):
 		while self.running:
 			self.thread_clock()
-			time.sleep(3)
 	
 	def exc_step(self):
 		self.thread_clock()
@@ -24,7 +23,6 @@ class Processor:
 		self.lastInst = self.instRunning
 		inst = instGenerator.genInstruction()
 		self.instRunning = inst
-		print(str(self.id) + "=" + inst)
 		initial = inst[0]
 		if initial == "R":
 			self.control.read(int(inst[5:8], 2))
@@ -34,6 +32,7 @@ class Processor:
 			print("CALC")
 		else:
 			print("Instruction generator error")
+
 
 		
 	def runThread(self, isStep):
@@ -47,7 +46,7 @@ class Processor:
 				hilo = threading.Thread(target=self.exc, daemon=True)
 			hilo.start()
 			
-	def stopThread(self):
+	def pauseThread(self):
 		if self.running:
 			self.running = False
 		else: 

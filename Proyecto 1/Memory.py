@@ -6,11 +6,9 @@ class Memory:
 			self.positions += [0]
 			
 	def write(self, address, data):
-		time.sleep(1)
 		self.positions[address] = data
 		
 	def read(self, address):
-		time.sleep(1)
 		return self.positions[address]
 	def printMem(self):
 		for i in range(8):
