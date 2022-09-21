@@ -9,6 +9,7 @@ class MemoryBus:
 		self.lock = threading.Lock()
 		self.memory = memory
 		self.processors = []
+		self.instructions = []
 		
 	def sharedAddressP(self, address, cpu):
 		cpus = []
@@ -26,11 +27,12 @@ class MemoryBus:
 		
 	def readMemory(self, address):
 		data = self.memory.read(address)
+		time.sleep(3)
 		return data
 		
 	def writeMemory(self, address, data):
 		self.memory.write(address, data)
-		
+		time.sleep(3)	
 	def changeStates(self, address, processorsShared, change):
 		for processor in processorsShared:
 			block = processor.control.cache.getL1BlockByAddress(address)
@@ -39,6 +41,8 @@ class MemoryBus:
 					block.setBitState("S") 
 				case 1:
 					block.setBitState("I") 
+				case 2:
+					block.setBitState("E")
 
 
 

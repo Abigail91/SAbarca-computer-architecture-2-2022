@@ -7,9 +7,11 @@ class L1Cache:
 		return self.l1Blocks[id]
 
 	def getL1BlockByAddress(self, address):
+		resultB = L1Block(0)
 		for l1Block in self.l1Blocks:
 			if l1Block.memoryAddress == address:	
-				return l1Block 
+				resultB = l1Block
+		return resultB 
 				
 	def write(self, address, data, bitState):
 		if address == 0 or address == 4:
@@ -17,11 +19,17 @@ class L1Cache:
 			block.setAddress(self.l1Blocks[0].getAddress())
 			block.setBitState(self.l1Blocks[0].getBitState())
 			block.setData(self.l1Blocks[0].getData())
+			self.l1Blocks[0].setAddress(address)
+			self.l1Blocks[0].setBitState(bitState)
+			self.l1Blocks[0].setData(data)
 		elif address == 1 or address == 5:
 			block = L1Block(1)
 			block.setAddress(self.l1Blocks[1].getAddress())
 			block.setBitState(self.l1Blocks[1].getBitState())
 			block.setData(self.l1Blocks[1].getData())
+			self.l1Blocks[1].setAddress(address)
+			self.l1Blocks[1].setBitState(bitState)
+			self.l1Blocks[1].setData(data)
 		elif address == 2 or address == 6:
 			block = L1Block(2)
 			block.setAddress(self.l1Blocks[2].getAddress())
