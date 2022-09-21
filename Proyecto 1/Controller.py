@@ -58,18 +58,17 @@ class Controller:
 				block = p.control.getCorresBlock(address)
 				if block.bitState == "M":
 					self.memoryBus.writeMemory(block.memoryAddress, block.data)
+					block.setBitState("E")
 				blockWrite = self.cache.write(address, data, "M")
-				
-				if blockWrite.bitState == "M" and blockWrite.memoryAddress != address:
-					self.memoryBus.writeMemory(blockWrite.memoryAddress, blockWrite.data)
-				self.memoryBus.changeStates(address, processorsShared, 1)
 				
 				
 			else:
 				blockWrite  = self.cache.write(address, data, "M")
 				
-		
-
+			if blockWrite.bitState == "M" and blockWrite.memoryAddress != address:
+					self.memoryBus.writeMemory(blockWrite.memoryAddress, blockWrite.data)
+			self.memoryBus.changeStates(address, processorsShared, 1)
+				
 			self.memoryBus.unlockMe()			
 			
 	def read(self, address):
@@ -96,6 +95,8 @@ class Controller:
 				
 			if blockWrite.bitState == "M" and blockWrite.memoryAddress != address:
 				self.memoryBus.writeMemory(blockWrite.memoryAddress, blockWrite.data)
+				
+				
 			self.memoryBus.unlockMe()
 			
 
