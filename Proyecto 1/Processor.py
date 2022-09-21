@@ -10,6 +10,7 @@ class Processor:
 		self.instRunning  = "---"
 		self.lastInst  = ""
 		self.control  = Controller(self.id, bus)
+		self.customInst = ""
 		
 	
 	def exc(self):
@@ -21,7 +22,11 @@ class Processor:
 		
 	def thread_clock(self):
 		self.lastInst = self.instRunning
-		inst = instGenerator.genInstruction()
+		if self.customInst == "":
+			inst = instGenerator.genInstruction()
+		else:	
+			inst = self.customInst[4:]
+			print(inst)
 		self.instRunning = inst
 		initial = inst[0]
 		if initial == "R":
@@ -31,7 +36,8 @@ class Processor:
 		elif initial == "C":
 			print("CALC")
 		else:
-			print("Instruction generator error")
+			print("Instruction error")
+			self.instRunning = ""
 
 
 		

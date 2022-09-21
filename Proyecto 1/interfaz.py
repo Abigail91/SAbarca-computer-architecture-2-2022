@@ -147,6 +147,11 @@ class interfaz:
 		self.M6.set("----------")
 		self.M7 = StringVar()
 		self.M7.set("----------")
+		
+		self.entry = Entry()
+		self.entry.grid(row=11, column=9)
+		self.btnCustom = Button(self.root, text = "Agregar Instrucción", command=self.addCustom, height=2)
+		self.btnCustom.grid(row=12, column=9)
 	
 		self.UI()
 		self.back()
@@ -157,6 +162,7 @@ class interfaz:
 		self.processors[1].runThread(False)
 		self.processors[2].runThread(False)
 		self.processors[3].runThread(False)
+		self.btnCustom['state'] = DISABLED
 
 		
 	def step(self):
@@ -170,7 +176,7 @@ class interfaz:
 		self.processors[1].pauseThread()
 		self.processors[2].pauseThread()
 		self.processors[3].pauseThread()
-	
+		self.btnCustom['state'] = NORMAL
 
 
 	def UI(self):
@@ -338,14 +344,11 @@ class interfaz:
 
 		lblP3 = Label(ventana, text="Instrucción especifica", width=30, height=2)
 		lblP3.grid(row=8, column=9)
-		place = Label(ventana, text="P#: WRITE address; Data", width=30, height=2)
+		place = Label(ventana, text="P#: WRITE address;Data", width=30, height=2)
 		place.grid(row=9, column=9)
 		place = Label(ventana, text="P#: READ address", width=30, height=2)
 		place.grid(row=10, column=9)
-		entry = Entry()
-		entry.grid(row=11, column=9)
-		btnCustom = Button(ventana, text = "Agregar Instrucción", command=self.addCustom, height=2)
-		btnCustom.grid(row=12, column=9)
+		
 
 		lblP3 = Label(ventana, text="Alertas", width=30, height=2)
 		lblP3.grid(row=15, column=9)
@@ -503,7 +506,22 @@ class interfaz:
 			time.sleep(0.1)
 
 
-	def addCustom():
-		print("Hello")
+	def addCustom(self):
+		
+		inst = self.entry.get()
+		self.entry.delete(0, END)
+		p = inst[:2]
+		match p:
+			case "P0":
+				self.processors[0].customInst = inst
+			case "P1":
+				self.processors[1].customInst = inst
+			case "P2":
+				self.processors[2].customInst = inst
+			case "P3":
+				self.processors[3].customInst = inst
+			case _:
+				print("Error en la instruccion introducida")
+		
 
 
