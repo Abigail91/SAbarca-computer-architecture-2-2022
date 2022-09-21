@@ -16,6 +16,7 @@ class Processor:
 	def exc(self):
 		while self.running:
 			self.thread_clock()
+			time.sleep(1)
 	
 	def exc_step(self):
 		self.thread_clock()

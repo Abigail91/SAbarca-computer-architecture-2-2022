@@ -67,6 +67,10 @@ class Controller:
 				
 			if blockWrite.bitState == "M" and blockWrite.memoryAddress != address:
 					self.memoryBus.writeMemory(blockWrite.memoryAddress, blockWrite.data)
+			elif blockWrite.bitState == "S" and blockWrite.memoryAddress != address:
+				shared = self.memoryBus.sharedAddressP(blockWrite.memoryAddress, self.processor)
+				if len(shared) == 1:
+					shared[0].control.getCorresBlock(blockWrite.memoryAddress).setBitState("E")
 			self.memoryBus.changeStates(address, processorsShared, 1)
 				
 			self.memoryBus.unlockMe()			
@@ -95,6 +99,10 @@ class Controller:
 				
 			if blockWrite.bitState == "M" and blockWrite.memoryAddress != address:
 				self.memoryBus.writeMemory(blockWrite.memoryAddress, blockWrite.data)
+			elif blockWrite.bitState == "S" and blockWrite.memoryAddress != address:
+				shared = self.memoryBus.sharedAddressP(blockWrite.memoryAddress, self.processor)
+				if len(shared) == 1:
+					shared[0].control.getCorresBlock(blockWrite.memoryAddress).setBitState("E")
 				
 				
 			self.memoryBus.unlockMe()

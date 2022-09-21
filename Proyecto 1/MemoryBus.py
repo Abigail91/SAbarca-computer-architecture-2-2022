@@ -27,12 +27,12 @@ class MemoryBus:
 		
 	def readMemory(self, address):
 		data = self.memory.read(address)
-		time.sleep(1)
+		time.sleep(3)
 		return data
 		
 	def writeMemory(self, address, data):
 		self.memory.write(address, data)
-		time.sleep(1)	
+		time.sleep(3)	
 	def changeStates(self, address, processorsShared, change):
 		for processor in processorsShared:
 			block = processor.control.cache.getL1BlockByAddress(address)
