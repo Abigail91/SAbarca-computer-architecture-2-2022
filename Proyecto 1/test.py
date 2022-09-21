@@ -4,15 +4,21 @@ from Memory import Memory
 from Processor import Processor
 from L1Block import L1Block
 import time
-memory =  Memory()
-b = MemoryBus(memory)
-p0 = Processor(0, b)
-p1 = Processor(1, b)
-p2 = Processor(2, b)
-p3 = Processor(3, b)
-b.processors = [p0, p1, p2,p3]
-
+from interfaz import interfaz
+from tkinter import *
+if __name__ == "__main__":
+	root = Tk()
+	ui = interfaz(root)
+	root.mainloop()
 	
+
+#memory =  Memory()
+#b = MemoryBus(memory)
+#p0 = Processor(0, b)
+#p1 = Processor(1, b)
+#p2 = Processor(2, b)
+#p3 = Processor(3, b)
+#b.processors = [p0, p1, p2,p3]	
 #p0.control.write(3, 99)
 #p1.control.read(3)
 #p2.control.read(3)
@@ -30,13 +36,13 @@ b.processors = [p0, p1, p2,p3]
 #p2.control.cache.getBlock(3).printBlock()
 #p3.control.cache.getBlock(3).printBlock()
 
-p0.runThread(False)
-p1.runThread(False)
-p2.runThread(False)
-p3.runThread(False)
+#p0.runThread(False)
+#p1.runThread(False)
+#p2.runThread(False)
+#p3.runThread(False)
 
-p0.control.printCache()
-p1.control.printCache()
-p2.control.printCache()
-p3.control.printCache()
-memory.printMem()
+#p0.control.printCache()
+#p1.control.printCache()
+#p2.control.printCache()
+#p3.control.printCache()
+#memory.printMem()

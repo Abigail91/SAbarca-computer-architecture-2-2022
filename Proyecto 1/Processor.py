@@ -10,19 +10,25 @@ class Processor:
 		self.instRunning  = "---"
 		self.lastInst  = ""
 		self.control  = Controller(self.id, bus)
+		self.customInst = ""
 		
 	
 	def exc(self):
 		while self.running:
 			self.thread_clock()
+			time.sleep(1)
 	
 	def exc_step(self):
 		self.thread_clock()
 		
 	def thread_clock(self):
 		self.lastInst = self.instRunning
-		inst = instGenerator.genInstruction()
-		print(str(self.id) + "=" + inst)
+		if self.customInst == "":
+			inst = instGenerator.genInstruction()
+		else:	
+			inst = self.customInst[4:]
+			print(inst)
+		self.instRunning = inst
 		initial = inst[0]
 		if initial == "R":
 			self.control.read(int(inst[5:8], 2))
@@ -31,7 +37,9 @@ class Processor:
 		elif initial == "C":
 			print("CALC")
 		else:
-			print("Instruction generator error")
+			print("Instruction error")
+			self.instRunning = ""
+
 
 		
 	def runThread(self, isStep):
@@ -39,13 +47,13 @@ class Processor:
 			print(str(self.id) + " Ejecutando \n")
 		else: 
 			if isStep:
-				hilo = threading.Thread(target=self.exc_step)
+				hilo = threading.Thread(target=self.exc_step, daemon=True)
 			else:
 				self.running = True
-				hilo = threading.Thread(target=self.exc)
+				hilo = threading.Thread(target=self.exc, daemon=True)
 			hilo.start()
 			
-	def stopThread(self):
+	def pauseThread(self):
 		if self.running:
 			self.running = False
 		else: 
